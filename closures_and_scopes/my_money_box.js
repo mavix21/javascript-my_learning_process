@@ -1,14 +1,14 @@
 #!/usr/bin/node
 
 function moneyBox (coins) {
-  let saveCoins = 0;
+  let savedCoins = 0;
 
-  function countCoins (coins) {
-    saveCoins += coins;
-    console.log(`Money Box: $${saveCoins}`);
+  function saveCoins (coins) {
+    savedCoins += coins;
+    console.log(`Money Box: $${savedCoins}`);
   }
 
-  return countCoins;
+  return saveCoins;
 }
 
 const myMoneyBox = moneyBox();
