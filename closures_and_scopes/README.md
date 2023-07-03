@@ -123,4 +123,5 @@ myFunction();
 `myFunction()` and is available only within the body of the `myFunction()`
 function. The `parent()` function also has a local variable called `parentVariable`.
 Since inner functions have access to the variables of outer functions, `parent()`
-can access the variable `myVariable` declared in `myFunction()`.
+can access the variable `myVariable` declared in `myFunction()` and `child()` can
+access the variables `myVariable` and `parentVariable`.
