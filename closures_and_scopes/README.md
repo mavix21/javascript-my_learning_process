@@ -50,7 +50,7 @@ fruits();
 
 A closure is the combination of a function and the lexical environment within
 which that function was declared. It allows a function to access variables from
-its outer (enclosing) scope *even after outer function has finished executing.*
+its outer (enclosing) scope **even after outer function has finished executing.**
 
 When a function is defined inside another function, the inner function forms a
 closure. This closure retains a reference to the variables and parameters of its
