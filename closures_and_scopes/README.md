@@ -92,7 +92,7 @@ function myFunction () {
     // myFunction lexical environment
     const myVariable = 1;
 
-    console.log(myVariable); // 19
+    console.log(myVariable); // 1
 
     // Nested function (Closure)
     function parent () {
@@ -119,4 +119,6 @@ myFunction();
 `myFunction()` creates a local variable called myVariable and a function called
 `parent()`. The `parent()` function is an inner function that is defined inside
 `myFunction()` and is available only within the body of the `myFunction()`
-function.
+function. The `parent()` function also has a local variable called `parentVariable`.
+Since inner functions have access to the variables of outer functions, `parent()`
+can access the variable `myVariable` declared in `myFunction()`.
