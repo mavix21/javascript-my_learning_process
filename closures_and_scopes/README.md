@@ -104,6 +104,8 @@ function myFunction () {
         console.log(myVariable, myGlobal); // 1 0
 
         function child () {
+            // Can access myVariable and parentVariable, because they are declared within
+            // the outer lexical environments
             console.log(parentVariable, myVariable, myGlobal) // 2 1 0
         }
 
