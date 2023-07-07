@@ -45,4 +45,47 @@ So what are those arguments exactly?
 function
 - The **second argument** `i` is the zero-based index of that element in the
 array
-- The **third argument** `arr` if the array itself.
+- The **third argument** `arr` is the array itself.
+
+Now, how might this cause unexpected behavior?
+
+Let's say we had a function called `sayHello`:
+
+```javascript
+function sayHello(name, greeting) {
+    if (greeting === undefined) {
+        greeting = 'Hello';
+    }
+
+    return `${greeting} ${name}!`;
+}
+```
+
+This function has a `greeting` parameter that will default to `Hello` if it is
+not defined. It takes `name` and greets them in the console.
+
+What would happen in this example?
+
+```javascript
+const result = ['Steve', 'Amanda'].map(sayHello);
+```
+
+You might expect result to be `['Hello Steve!', 'Hello Amanda!']`.
+
+However, it is actually going to be `['0 Steve!', '1 Amanda!']`.
+
+This is because the index is being passed to `sayHello` as the second argument.
+If we want to use the default greeting we need to explicitly only send one
+argument:
+
+```javascript
+const result = ['Steve', 'Amanda'].map(function (name) {
+    return sayHello(name);
+})
+```
+
+Here, result will be `['Hello Steve!', 'Hello Amanda!']` as expected.
+
+> When in doubt, it's best to create an anonymous function and explicitly pass
+the arguments to the function rather that depending on the function not to use
+the last two arguments.
