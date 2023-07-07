@@ -1,7 +1,7 @@
 {
   "name": "closures_and_scopes",
   "version": "1.0.0",
-  "description": "Practical exercies about closures and scopes in javascript",
+  "description": "My Javascript learning journey",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,10 +9,12 @@
   "author": "mavix21",
   "license": "ISC",
   "devDependencies": {
+    "chai": "^4.3.7",
     "eslint": "^8.44.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^16.0.1",
-    "eslint-plugin-promise": "^6.1.1"
+    "eslint-plugin-promise": "^6.1.1",
+    "mocha": "^10.2.0"
   }
 }
