@@ -15,7 +15,7 @@ animation library directly (which may break it) the author gives you this
 ability to run a function at a specific point in time.
 
 Callbacks are also commonly associated with `asynchronous programming` since
-they allow you to pick up executing code ate some future point in time.
+they allow you to pick up executing code at some future point in time.
 Asynchronous programming will wait for something else to happen before running.
 Common asynchronous situations include waiting for user feedback, waiting on a
 server response or waiting for an animation to complete.
