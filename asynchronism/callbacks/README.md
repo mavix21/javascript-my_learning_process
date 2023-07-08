@@ -19,3 +19,55 @@ they allow you to pick up executing code at some future point in time.
 Asynchronous programming will wait for something else to happen before running.
 Common asynchronous situations include waiting for user feedback, waiting on a
 server response or waiting for an animation to complete.
+
+### Running a Callback Function
+
+In JavaScript, functions are `first-class objects`. This means, just like
+objects, functions can be stored in variables, returned from functions, and
+passed into other functions as arguments.
+
+With callback functions, we will be passing functions into other functions to
+be called at a very specific time.
+
+```javascript
+function simpleFunction(fn) {
+    // invoke callback function
+    fn();
+}
+
+simpleFunction(function callbackFunction() {
+    console.log('hi');
+}); // hi
+```
+
+In the aboke example, `callbackFunction` is passed to `simpleFunction` as an
+argument and then invoked inmediately. The result is that 'hi' is logged once
+to the console.
+
+### Asynchronous Callback
+
+We discussed how callbacks are run at a `specific time` when they are passed to
+another function. Typically, this makes them extremely useful for asynchronous
+programming.
+
+For web-applications, where JavaScript is especially prevalent, asynchronous
+callbacks can be helpful in several scenarios:
+
+- AJAX requests to the server
+- Waiting for a user response
+- Animations
+
+A simple example for asynchronous code is to use the web API `setTimeout` which
+will run code after a set amount of time:
+
+```javascript
+setTimeout(function callback () {
+    // the code to run after 1000 milliseconds
+}, 1000);
+
+// code down here runs synchronously (before the callback)
+```
+
+In `setTimeout`, we give it a callback to run after a period of time (in ms).
+The first argument to the function is the callback and the second argument is
+the number of milliseconds to wait before running the callback function.
