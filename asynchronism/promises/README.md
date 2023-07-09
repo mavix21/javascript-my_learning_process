@@ -153,3 +153,87 @@ promise.catch((err) => {
 
 > From the promise implementer's side, this is known as `rejecting` the
 promises, as opposed to `resolving` with server data.
+
+## Creating a Promise
+
+We learned how to handle a returned promise. In this section `we create a
+promise`.
+
+Most modern JavaScript environments have a built-in `Promise` object that can
+be use to create a new Promise:
+
+```javascript
+const promise = new Promise(function (resolve, reject) {
+    resolve('resolve successful!');
+});
+```
+
+The function provided to the promise is called an **executor** function. This
+function is called inmediately and typically will be set to resolve after
+something asynchronous has happened.
+
+### Executor Function
+
+The function passed to `Promise` is called the `executor` function.
+
+```javascript
+new Promise (function executor (resolve, reject) {
+    // inside the executor function
+    // we can either resolve or reject
+    if (success) {
+        resolve();
+    }
+    else {
+        reject();
+    }
+});
+```
+
+You can see the `executor` function in the above example is named. This function
+is called `inmediately` once the promise is created.
+
+Inside this function we can `resolve`, which will call all functions wired as
+callbacks in the promise `then` method.
+
+Alternatively, we can `reject`, which will call functions wired as callbacks in
+the promise `catch` method.
+
+> Both `resolve` and `reject` can take arguments that will be passed directly
+to the `then` and `catch` callbacks respecively.
+
+### File System Example
+
+Let's see and example where we wrap a callback function in a promise:
+
+```javascript
+const promise = new Promise(function (resolve, reject) {
+    fs.readFile('abc.txt', function (err, contents) {
+        if (err) {
+            // something bad happened, reject with the err
+            reject(err);
+        }
+        else {
+            // success! resolve the promise with the contents
+            resolve(contents);
+        }
+    });
+});
+```
+
+We are reading a file from the file system and wrapping the callback to create
+a promise. If there is an error, we'll reject the promise, which is caught by a
+`catch` callback:
+
+```javascript
+promise.catch(function (err) {
+    console.error('something went wrong', err);
+});
+```
+
+Otherwise, we'll resolve the promise with the contents of the file:
+
+```javascript
+promise.then(function (fileContents) {
+    console.log(fileContents);
+});
+```
