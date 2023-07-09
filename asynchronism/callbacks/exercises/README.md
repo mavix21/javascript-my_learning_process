@@ -40,3 +40,29 @@ dialog.onClose(function () {
 > Remember in the previous exercise the callback was invoked asynchronously by
 `setTimeout`. This callback is similar! The main difference here is the `close`
 function is kicked off by the user when they click out of the dialog.
+
+## 2. For Each
+
+Let's create our own `forEach` function.
+
+This function will take two parameters:
+
+1. An `array` of elements
+2. A callback `function` that we want to return for each element in the array
+
+Be sure to call the callback `function` with both the current element in the
+array and the zero-based `index`.
+
+Example:
+
+```javascript
+forEach(['a', 'b', 'c'], (el, i) => {
+    console.log(e, i);
+})
+```
+
+The `console.log` line should run three times, logging:
+
+1. `a, 0`
+2. `b, 1`
+3. `c, 2`
