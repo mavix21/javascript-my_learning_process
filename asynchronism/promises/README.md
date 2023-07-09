@@ -132,3 +132,24 @@ promise.then(function (data) {
 
 Here `getServerData` returns a promise. We can call `.then` and provide a
 function that is invoked once the server data is resolved.
+
+### Errors
+
+Sometimes, a promises `does not resolve successfully`.
+
+For example: We want to get data from the server and the server cannot handle
+our request. In this case we might receive an error response code from the
+server.
+
+In promises, we can handle errors with `.catch`:
+
+```javascript
+const promise = getDataFromServer();
+
+promise.catch((err) => {
+    console.error('oh no, something bad happened');
+});
+```
+
+> From the promise implementer's side, this is known as `rejecting` the
+promises, as opposed to `resolving` with server data.
