@@ -106,3 +106,29 @@ filePromise.then((contents) => {
     // do something with the file contents
 });
 ```
+
+## Using Promises
+
+JavaScript is `single-threaded`. Because of this you will find yourself writing
+quite a bit of `asynchronous code`. This referes to writing code that will
+exectue at some future point in time after something happened.
+
+Providing a callback function as an argument is a classic way of handling
+asynchronous code.
+
+`Promises` provide an alternative:
+
+```javascript
+const promise = getServerData();
+
+// similar to using a callback function argument, except we wire up
+// the callback using .then
+promise.then(function (data) {
+    // this function is called asynchronously
+    // once the server has responded with data
+    console.log('got data!', data);
+});
+```
+
+Here `getServerData` returns a promise. We can call `.then` and provide a
+function that is invoked once the server data is resolved.
