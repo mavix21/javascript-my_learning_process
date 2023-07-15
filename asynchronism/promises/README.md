@@ -237,3 +237,67 @@ promise.then(function (fileContents) {
     console.log(fileContents);
 });
 ```
+
+## Async Await
+
+Another useful tool in the asynchronous JavaScript toolbet is `async/await`.
+
+With these two keywords we can handle promises line-by-line like synchronous
+code:
+
+```javascript
+async function getData () {
+    const result = await severCall();
+
+    // this will not run until serverCall resolves/rejects
+    return result;
+}
+```
+
+In this example, `serverCall` returns a promise and the `result` is the resolved
+value.
+
+> The `return` line does not run until after the `serverCall` promise is
+complete. This is the case for anything after the `await` line.
+
+The above example is functionally equivalent to:
+
+```javascript
+function getData () {
+    return serverCall().then((result) => {
+        return result;
+    });
+}
+```
+
+In both cases, `getData` returns a promise and the promise resolves with the
+result.
+
+> You can think of `async` as a way of denoting that a function will return a
+promise.
+
+### Async
+
+The `async` keyword will make a function return a promise. Even if we were to
+make a function like this:
+
+```javascript
+async function test () {
+
+}
+```
+
+By adding `async` in front, this will now return a promise when invoked.
+
+This allows us to write asynchronous code inside of the `test` function as if it
+were synchronous.
+
+For example:
+
+```javascript
+async function test () {
+    await getServerData();
+
+    return 3;
+}
+```
