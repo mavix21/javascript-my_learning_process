@@ -1,10 +1,11 @@
 {
-  "name": "closures_and_scopes",
+  "name": "vanilla-node-projects",
   "version": "1.0.0",
   "description": "My Javascript learning journey",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./simple_server_vanilla_js/server.js",
+    "dev": "nodemon ./simple_server_vanilla_js/server.js"
   },
   "author": "mavix21",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-promise": "^6.1.1",
-    "mocha": "^10.2.0"
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.1"
   }
 }
