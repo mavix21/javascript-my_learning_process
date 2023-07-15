@@ -1,0 +1,63 @@
+[
+  {
+    "id": "1",
+    "name": "Airpods Wireless Bluetooth Headphones",
+    "description": "High-quality AAC audio that offers immersive listening experience and built-in microphone that allows you to take calls while working",
+    "price": 89.99
+  },
+  {
+    "id": "2",
+    "name": "iPhone 11 Pro 256GB Memory",
+    "description": "Introducing the iPhone 11 Pro. A transformative triple-camera system that adds tons of capability without complexity.",
+    "price": 599.99
+  },
+  {
+    "id": "3",
+    "name": "Samsung Galaxy S21 Ultra",
+    "description": "Experience the ultimate in smartphone technology with the Samsung Galaxy S21 Ultra. It features a stunning display, powerful performance, and a versatile camera system.",
+    "price": 1099.99
+  },
+  {
+    "id": "4",
+    "name": "Sony PlayStation 5",
+    "description": "Immerse yourself in the world of gaming with the Sony PlayStation 5. Enjoy stunning graphics, fast loading times, and a wide range of games to choose from.",
+    "price": 499.99
+  },
+  {
+    "id": "5",
+    "name": "Dell XPS 15 Laptop",
+    "description": "The Dell XPS 15 is a powerful and sleek laptop that offers exceptional performance for both work and entertainment. It features a stunning display, fast processor, and ample storage space.",
+    "price": 1499.99
+  },
+  {
+    "id": "6",
+    "name": "Amazon Echo (4th Generation)",
+    "description": "The Amazon Echo is a smart speaker that combines premium sound with a built-in voice assistant. It can play music, control smart home devices, and provide information with just your voice.",
+    "price": 99.99
+  },
+  {
+    "id": "7",
+    "name": "GoPro HERO9 Black",
+    "description": "Capture stunning 5K videos and high-resolution photos with the GoPro HERO9 Black. It's rugged, waterproof, and packed with advanced features for capturing your adventures.",
+    "price": 449.99
+  },
+  {
+    "id": "8",
+    "name": "Nintendo Switch",
+    "description": "The Nintendo Switch is a versatile gaming console that allows you to play games at home or on the go. It offers a wide range of games and supports multiplayer gaming.",
+    "price": 299.99
+  },
+  {
+    "id": "9",
+    "name": "Fitbit Versa 3",
+    "description": "Track your fitness and stay connected with the Fitbit Versa 3. It features heart rate monitoring, built-in GPS, sleep tracking, and smart notifications for calls and messages.",
+    "price": 229.99
+  },
+  {
+    "id": "10",
+    "name": "Canon EOS Rebel T7i DSLR Camera",
+    "description": "Capture stunning photos and videos with the Canon EOS Rebel T7i DSLR Camera. It features a 24.2-megapixel sensor, fast autofocus, and a vari-angle touchscreen for easy shooting.",
+    "price": 799.99
+  }
+]
+
