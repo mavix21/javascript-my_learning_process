@@ -301,3 +301,29 @@ async function test () {
     return 3;
 }
 ```
+
+We won't return `3` until after the promise returned from `getServerData`
+resolves.
+
+This would be a problem if `test` was called and it expected the return value
+inmediately:
+
+```javascript
+const three = test();
+```
+
+The value of `three` is not `3`, it's a Promise.
+
+```javascript
+console.log(three); // Promise
+
+// We should try to name our objects appropriately
+const threePromise = three;
+threePromise.then(function (data) => {
+    console.log(data); // 3
+});
+```
+
+By wrapping this function `test` in a promise, it gives us a special
+environment where we can write code that looks synchronous while allowing it to
+be asynchronous.
