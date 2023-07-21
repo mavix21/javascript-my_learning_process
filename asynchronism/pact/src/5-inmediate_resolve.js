@@ -9,6 +9,7 @@ class Pact {
     this.thenFns = [];
     this.catchFns = [];
     this.status = STATUS.PENDING;
+
     this.resolve = (value) => {
       this.resolvedValue = value;
       this.status = STATUS.RESOLVED;
