@@ -27,11 +27,7 @@ class Pact {
 
   then (callback) {
     if (this.status === STATUS.PENDING) {
-      return new Pact((resolve, reject) => {
-        this.thenFns.push((val) => {
-          resolve(callback(val));
-        });
-      });
+      this.thenFns.push(callback);
     } else if (this.status === STATUS.RESOLVED) {
       callback(this.resolvedValue);
     }
