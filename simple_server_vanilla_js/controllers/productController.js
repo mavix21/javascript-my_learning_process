@@ -11,6 +11,4 @@ async function getProducts (request, response) {
   }
 }
 
-module.exports = {
-  getProducts
-};
+module.exports = { getProducts };
