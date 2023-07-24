@@ -127,3 +127,80 @@ animal instanceof Animal; // true
 ```
 
 The `instanceof` method here would return `true`.
+
+Now that we created an instance of the `supertype` (or parent) `Animal`, we'll
+set the `prototype` of the subtype (or child) -in this case, `Bird` -to be an
+instance of `Animal`
+
+```javascript
+Bird.prototype = Object.create(Animal.prototype);
+```
+
+Remember that the `prototype` is like the "recipe" for creating an object. In a
+way, the recipe for `Bird` now includes all the key "ingredients" from `Animal`.
+
+```javascript
+const duck = new Bird('Donald');
+duck.eat();
+```
+
+### Reset the inherited constructor property
+
+When an object inherits its `prototype` from another object, it also inherits
+the supertype's constructor property.
+
+Here is an example:
+
+```javascript
+function Bird () { };
+Bird.prototype = Object.create(Animal.prototype);
+const duck = new Bird();
+console.log(duck.constructor); // [Function: Animal]
+```
+
+But `duck` and all instances of `Bird` should show that they were constructed
+`Bird` and not by `Animal`. To do so, you can manually set the constructor
+property of `Bird` to the `Bird` object.
+
+```javascript
+Bird.prototype.constructor = Bird;
+console.log(duck.constructor); // [Function: Bird]
+```
+
+### Add methods after inheritance
+
+A constructor function that inherits its `prototype` object from a supertype
+constructor function can still have its own methods in addition to inherit
+methods.
+
+For example, `Bird` is a constructor that inherits its `prototype` from
+`Animal`:
+
+```javascript
+function Animal () { };
+Animal.prototype.eat = function () {
+    console.log('nom nom nom');
+};
+
+function Bird () { };
+Bird.prototype = Object.create(Animal.prototype);
+Bird.prototype.constructor = Bird;
+```
+
+In addition to what is inherit from `Animal`, you want to add behavior to
+`Bird` objects. Here, `Bird` will get a `fly()` function. Functions are added
+to `Bird`'s `prototype` the same way as any constructor function:
+
+```javascript
+Bird.prototype.fly = function () {
+    console.log("I'm flying!");
+};
+```
+
+Now instances of `Bird` will have both `eat()` and `fly()` methods:
+
+```javascript
+const duck = new Bird();
+duck.eat(); // nom nom nom
+duck.fly(); // I'm flying!
+```
