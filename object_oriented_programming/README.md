@@ -281,7 +281,7 @@ operator will create a new object and set it to `this` within the `Bird`
 function in the example above. implicitly, `new` will also return this object
 (if no other object is returned).
 
-> In the **[This keyword](#this+keyword)** section we went over rules for
+> In the **[This keyword](#this-keyword)** section we went over rules for
 binding `this`. Using `new` is another rule for how it is bound. In this case,
 the new instance of the car is used for `this` in the constructor function.
 
