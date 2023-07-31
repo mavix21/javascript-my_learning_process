@@ -258,7 +258,7 @@ and behaviors that will belong to the new object. Think of them as a blueprint
 for the creation of new objects.
 
 ```javascript
-function Bird(name, color) {
+function Bird (name, color) {
     this.name = name;
     this.color = color;
     this.numLegs = 2;
@@ -330,41 +330,16 @@ to new instances.
 
 > You can think of prototypes as a *chain of linked objects*.
 
-#### Prototype Chain
-
-Let's consider a simple example:
+All objects in Javascript (whit few exceptions) have a `prototype`. Also, an
+object's `prototype` itself is an object.
 
 ```javascript
-function Animal (name) {
+function Bird (name) {
     this.name = name;
 }
 
-const animal = new Animal('Bud');
+typeof Bird.prototype; // object
 ```
-
-The animal here will already have some methods available: `valueOf`,
-`hasOwnProperty`, `toString` and more depending on the Javascript environment.
-Where do these methods come from?
-
-They come from `Object.prototype`. This is the top of the prototype chain for
-every object in Javascript.
-
-**Note** that these methods are not created anew for every object! They are
-actually the same methods:
-
-```javascript
-const animal = new Animal('Bud');
-const animal2 = new Animal('Lassie');
-
-console.log(animal.hasOwnProperty === animal2.hasOwnProperty); // true
-```
-
-First, the Javascript engine will look up to see if the animal instances have a
-method `hasOwnProperty`. Then it will look on the `Animal.prototype`. If not,
-it will continue to `Object.prototype` and find the method there.
-
-Since bot `animal` and `animal2` refer to the `hasOwnProperty` method on
-`Object.prototype`, the reference is equal and returns `true` above.
 
 ### Object Properties
 
@@ -378,6 +353,8 @@ function Bird (name) {
 }
 
 Bird.prototype.numLegs = 2; // prototype property
+
+const duck = new Bird('Sylvana')
 ```
 
 Here is how you add `duck`'s own properties to the array `ownProps` and
@@ -388,7 +365,7 @@ let ownProps = [];
 let prototypeProps = [];
 
 for (let property in duck) {
-  if(duck.hasOwnProperty(property)) {
+  if (duck.hasOwnProperty(property)) {
     ownProps.push(property);
   } else {
     prototypeProps.push(property);
@@ -399,18 +376,90 @@ console.log(owProps); // ["name"]
 console.log(prototypeProps); // ["numLegs"]
 ```
 
-## The Prototype Chain
+### Change the Prototype to a New Object
 
-All objects in Javascript (whit few exceptions) have a `prototype`. Also, an
-object's `prototype` itself is an object.
+Up until now we have been adding properties to the `prototype` individually:
 
 ```javascript
-function Bird (name) {
+Bird.prototype.numLegs = 2;
+```
+
+This becomes tedious after more than a few properties.
+
+```javascript
+Bird.prototype.eat = function () {
+    console.log('nom nom nom');
+}
+
+Bird.prototype.describe = function () {
+    console.log('My name is ' + this.name);
+}
+```
+
+A more efficient way is to set the `prototype` to a new object that already
+contains the properties. This way, the properties are added all at once:
+
+```javascript
+Bird.prototype = {
+    numLegs: 2,
+    eat: function () {
+        console.log('nom nom nom');
+    },
+    describe: function () {
+        console.log('My name is ' + this.name);
+    }
+};
+```
+
+**There is one crucial side effect of manually setting the prototype to a new
+object**. It erases the `constructor` property! This property can be used to
+check which constructor function created the instance, but since the property
+has been overwritten, it now gives false results:
+
+```javascript
+duck.constructor === Bird; // false (it should be true!!)
+duck.constructor === Object; // true
+duck instanceof Bird; // true
+```
+
+To fix this, whenever a prototype is manually set to a new object, remember to
+define the `constructor` property:
+
+```javascript
+Bird.prototype = {
+    constructor: Bird, // <- fixes the problem
+    numLegs: 2,
+    eat: function () {
+        console.log('nom nom nom');
+    },
+    describe: function () {
+        console.log('My name is ' + this.name);
+    }
+};
+```
+
+#### Understand where an object's prototype comes from
+
+Just like people inherit genes from their parents, an object inherits its
+`prototype` directly from the constructor function that created it. For example
+, here the `Bird` constructor creates the `duck` object:
+
+```javascript
+function Bird(name) {
     this.name = name;
 }
 
-typeof Bird.prototype; // object
+const duck = new Bird('Donald');
 ```
+
+`duck` inherits its `prototype` from the `Bird` constructor function. You can
+show this relationship with the `ìsPrototypeOf` method:
+
+```javascript
+Bird.prototype.isPrototypeOf(duck); // true
+```
+
+### The Prototype Chain
 
 Because a `prototype` is an `object`, a `prototype` can have its own
 `prototype`! In this case, the prototype of `Bird.prototype` is
@@ -423,14 +472,41 @@ Object.prototype.isPrototypeOf(Bird.prototype); // true
 How is this useful? You may recall the `hasOwnProperty` method:
 
 ```javascript
-let duck = new Bird("Donald");
+const duck = new Bird("Donald");
 duck.hasOwnProperty("name");
 ```
 
+The `Bird` instance `duck` here will already have some methods available:
+`valueOf`, `hasOwnProperty`, `toString` and more depending on the Javascript
+environment. Where do these methods come from?
+
+They come from `Object.prototype`. This is the top of the prototype chain for
+every object in Javascript.
+
+**Note** that these methods are not created anew for every object! They are
+actually the same methods:
+
+```javascript
+const bird1 = new Bird('Bud');
+const bird2 = new Bird('Lassie');
+
+console.log(bird1.hasOwnProperty === bird2.hasOwnProperty); // true
+```
+
+First, the Javascript engine will look up to see if the `Bird` instances have a
+method `hasOwnProperty`. Then it will look on the `Bird.prototype`. If not,
+it will continue to `Object.prototype` and find the method there.
+
+Since bot `bird1` and `bird2` refer to the `hasOwnProperty` method on
+`Object.prototype`, the reference is equal and returns `true` above.
+
 The `hasOwnProperty` method is defined in `Object.prototype`, which can be
-accessedby `Bird.prototype`, which can then be accessed by `duck`. This is an
-example of the prototype chain. In this prototype chain, `Bird` is the supertype
-for `duck`, while `duck` is the subtype. `Object` is a supertype for
+accessedby `Bird.prototype`, which can then be accessed by `duck`, `bird1` and
+`bird2`. This is an example of the prototype chain. In this prototype chain,
+`Bird` is the supertype for `duck`, while `duck` is the subtype.
+`Object` is a supertype for both `Bird` and `duck`. `Object` is a `supertype`
+for all objects in Javascript. Therefore, any object can use the
+`hasOwnProperty` method.
 
 Notice in the example below that the `describe` method is shared by `Bird` and
 `Dog`:
@@ -451,8 +527,13 @@ Dog.prototype = {
 };
 ```
 
-The `describe` method is repeated in two places. The code can be edited to follow
-the DRY principle by creating a `supertype` (or parent) called Animal:
+> Be careful not to use arrow function syntax here, or `this` may not be
+appropiately bound! We want `this` to be the instance of `Dog` or `Bird`. With
+the arrow syntax, it will inherit the context of the scope unless otherwise
+bound.
+
+The `describe` method is repeated in two places. The code can be edited to
+follow the DRY principle by creating a `supertype` (or parent) called Animal:
 
 ```javascript
 function Animal () { };
@@ -463,6 +544,19 @@ Animal.prototype = {
         console.log('My name is' + this.name);
     }
 };
+```
+
+Since `Animal` includes the `describe` method, we can remove it from `Bird` and
+`Dog`:
+
+```javascript
+Bird.prototype = {
+    constructor: Bird;
+};
+
+Bird.prototype = {
+    constructor: Dog;
+}
 ```
 
 How to reuse the methods of `Animal` inside `Bird` and `Dog` without defining
@@ -510,7 +604,7 @@ const duck = new Bird('Donald');
 duck.eat();
 ```
 
-### Reset the inherited constructor property
+#### Reset the inherited constructor property
 
 When an object inherits its `prototype` from another object, it also inherits
 the supertype's constructor property.
@@ -533,7 +627,7 @@ Bird.prototype.constructor = Bird;
 console.log(duck.constructor); // [Function: Bird]
 ```
 
-### Add methods after inheritance
+#### Add methods after inheritance
 
 A constructor function that inherits its `prototype` object from a supertype
 constructor function can still have its own methods in addition to inherit
@@ -570,3 +664,47 @@ const duck = new Bird();
 duck.eat(); // nom nom nom
 duck.fly(); // I'm flying!
 ```
+
+#### Override inherited methods
+
+We learned that an object can inherit its behavior (methods) from another
+object by referencing its `prototype` object:
+
+```javascript
+ChildObject.prototype = Object.create(ParentObject.prototype);
+```
+
+Then the `ChildObject` received its own methods by chaining them onto its
+`prototype`:
+
+```javascript
+ChildObject.prototype.methodName = function () { ... };
+```
+
+It's possible to override an inherited method. It's done the same way -by
+adding a method to `ChildObject.prototype` using the same method name as the
+one to override. Here's an example of `Bird` overriding the `eat()` method
+inherited from `Animal`:
+
+```javascript
+function Animal () { }
+Animal.prototype.eat = function () {
+    return 'nom nom nom';
+};
+
+function Bird () { }
+Bird.prototype = Object.create(Animal.prototype);
+
+Bird.prototype.eat = function () {
+    return 'peck peck peck';
+}
+```
+
+If you have an instance `const duck = new Bird();` and you call `duck.eat()`,
+this is how Javascript looks for the method on the `prototype` chain of `duck`:
+
+1. `duck` => Is `eat()` defined here? No.
+2. `Bird` => Is `eat()` defined here? Yes. Execute it and stop searching.
+3. `Animal` => `eat()` is also defined here, but Javascript stopped searching
+before reaching this level.
+4. `Object` => Javascript stopped searching before reaching this level.
